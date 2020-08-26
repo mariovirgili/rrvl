@@ -141,6 +141,9 @@ to be accepted. New fonts are welcome if they provide value beyond
 aesthetics (e.g. they contain glyphs for a script missing in already
 packaged fonts).
 
+Browser forks, including those based on Chromium and Firefox, are generally not
+accepted. Such forks require heavy patching, maintenance and hours of build time.
+
 <a id="buildphase"></a>
 ### Package build phases
 
@@ -336,6 +339,13 @@ The following functions are defined by `xbps-src` and can be used on any templat
 
 	Note that vsed will call the sed command for every regex specified against
 	every file specified, in the order that they are given.
+
+- *vcompletion()* `<file> <shell> [<command>]`
+
+	Installs shell completion from `file` for `command`, in the correct location
+	and with the appropriate filename for `shell`. If `command` isn't specified,
+	it will default to `pkgname`. The `shell` argument can be one of `bash`,
+	`fish` or `zsh`.
 
 > Shell wildcards must be properly quoted, Example: `vmove "usr/lib/*.a"`.
 
@@ -613,6 +623,12 @@ the `$DESTDIR` which will not be scanned for runtime dependencies. This may be u
 skip files which are not meant to be run or loaded on the host but are to be sent to some
 target device or emulation.
 
+- `ignore_elf_files` White space separated list of machine code files
+in /usr/share directory specified by absolute path, which are expected and allowed.
+
+- `ignore_elf_dirs` White space separated list of directories in /usr/share directory
+specified by absolute path, which are expected and allowed to contain machine code files.
+
 - `nocross` If set, cross compilation won't be allowed and will exit immediately.
 This should be set to a string describing why it fails, or a link to a travis
 buildlog demonstrating the failure.
@@ -639,6 +655,9 @@ This appends to the generated file rather than replacing it.
 
 - `nopie` Only needs to be set to something to make active, disables building the package with hardening
   features (PIE, relro, etc). Not necessary for most packages.
+
+- `nopie_files` White-space seperated list of ELF binaries that won't be checked
+for PIE.
 
 - `reverts` xbps supports a unique feature which allows to downgrade from broken
 packages automatically. In the `reverts` field one can define a list of broken
@@ -694,6 +713,9 @@ used.
 - `archs` Whitespace separated list of architectures that a package can be
 built for, available architectures can be found under `common/cross-profiles`
 alongside the `noarch` value for packages that do not contain any machine code.
+In general, `archs` should only be set if the upstream software explicitly targets
+certain architectures or there is a compelling reason why the software should not be
+available on some supported architectures.
 Examples:
 
 	```
@@ -937,7 +959,7 @@ Environment variables for a specific `build_style` can be declared in a filename
 matching the `build_style` name, Example:
 
     `common/environment/build-style/gnu-configure.sh`
-    
+
 - `texmf` For texmf zip/tarballs that need to go into /usr/share/texmf-dist. Includes
 duplicates handling.
 
@@ -963,7 +985,9 @@ additional paths to be searched when linking target binaries to be introspected.
 - `qemu` sets additional variables for the `cmake` and `meson` build styles to allow
 executing cross-compiled binaries inside qemu.
 It sets `CMAKE_CROSSCOMPILING_EMULATOR` for cmake and `exe_wrapper` for meson
-to `qemu-<target_arch>-static` and `QEMU_LD_PREFIX` to `XBPS_CROSS_BASE`
+to `qemu-<target_arch>-static` and `QEMU_LD_PREFIX` to `XBPS_CROSS_BASE`.
+It also creates the `vtargetrun` function to wrap commands in a call to
+`qemu-<target_arch>-static` for the target architecture.
 
 - `qmake` creates the `qt.conf` configuration file (cf. `qmake` `build_style`)
 needed for cross builds and a qmake-wrapper to make `qmake` use this configuration.

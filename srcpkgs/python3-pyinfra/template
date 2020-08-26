@@ -1,7 +1,7 @@
 # Template file for 'python3-pyinfra'
 pkgname=python3-pyinfra
-version=1.0.2
-revision=1
+version=1.0.4
+revision=2
 archs=noarch
 wrksrc="pyinfra-${version}"
 build_style=python3-module
@@ -14,12 +14,13 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="MIT"
 homepage="https://pyinfra.com/"
 distfiles="https://github.com/Fizzadar/pyinfra/archive/v${version}.tar.gz"
-checksum=831d6d0af1e63ec535f69d206fbf46e4beda40e0352a904c52c55269b9bb3e74
+checksum=54471ee5a3cdac30b3e4321695230347a866aae04228f7619037db569eb07fd2
 
 post_extract() {
 	vsed -i -e '/configparser/d' setup.py  # is in Python 3.8
 }
 
 post_install() {
+	rm -r ${DESTDIR}/${py3_sitelib}/tests
 	vlicense LICENSE.md
 }

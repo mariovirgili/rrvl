@@ -1,7 +1,7 @@
 # Template file for 'sqmail'
 pkgname=sqmail
-version=4.0.07
-revision=4
+version=4.0.08
+revision=1
 create_wrksrc=yes
 build_wrksrc="mail/${pkgname}/${pkgname}-${version}/src"
 makedepends="fehQlibs libidn2-devel ucspi-ssl-devel"
@@ -11,7 +11,7 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="Public Domain"
 homepage="https://www.fehcom.de/sqmail/sqmail.html"
 distfiles="https://www.fehcom.de/sqmail/sqmail-${version}.tgz"
-checksum=6ec1387fc43002148e9fc418fdc406ca88ee69c30210e7b736b35509ad098a81
+checksum=f477ffb5c0fb41ba8827db129e86507ce9e3c429b17782c7e2cb4a26e0edc70e
 nocross="custom build system"
 provides="smtp-server-0_1"
 replaces="smtp-server>=0"
@@ -124,7 +124,8 @@ do_install() {
 	vlicense ../doc/LICENSE
 	mv ${DESTDIR}/usr/bin/maildirmake ${DESTDIR}/usr/bin/maildirmake.sqmail
 	mv ${DESTDIR}/usr/share/man/man1/maildirmake.1 ${DESTDIR}/usr/share/man/man1/maildirmake.sqmail.1
-	mv ${DESTDIR}/usr/share/man/man5/maildir.5 ${DESTDIR}/usr/share/man/man5/maildir.sqmail.1
+	mv ${DESTDIR}/usr/share/man/man5/maildir.5 ${DESTDIR}/usr/share/man/man5/maildir.sqmail.5
+	mv ${DESTDIR}/usr/share/man/man5/mbox.5 ${DESTDIR}/usr/share/man/man5/mbox.sqmail.5
 	ln -sf sendmail ${DESTDIR}/usr/bin/mailq
 	vdoc ${FILESDIR}/README.voidlinux
 	vsconf ${FILESDIR}/ssl.env
