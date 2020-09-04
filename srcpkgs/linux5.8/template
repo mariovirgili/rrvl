@@ -1,14 +1,16 @@
 # Template file for 'linux5.8'
+_gitrev=33ba112f566a7e7379297f974335631583893360
 pkgname=linux5.8
-version=5.8.6
+version=5.9.0
 revision=1
 wrksrc="linux-${version}"
 short_desc="Linux kernel and modules (${version%.*} series)"
 maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="GPL-2.0-only"
 homepage="https://www.kernel.org"
-distfiles="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${version}.tar.xz"
-checksum=8ca500ed7b2ed68f004560ea4c6b02c902f8fe1d62ace7a29a5e38a0909a0ba0
+distfiles="https://github.com/macromorgan/odroid_go_advance_linux/archive/${_gitrev}.tar.gz"
+checksum=211a04c0f675dea6db81a81cd5781d60a47613b6b7c8147fbff89646496d0f9f
+wrksrc="odroid_go_advance_linux-33ba112f566a7e7379297f974335631583893360"
 python_version=3
 patch_args="-Np1"
 
@@ -24,7 +26,7 @@ preserve=yes
 hostmakedepends="tar xz bc elfutils-devel flex gmp-devel kmod libmpc-devel
  libressl-devel perl uboot-mkimage cpio pahole"
 
-_kernver="${version}_${revision}"
+_kernver="${version}-rc3"
 triggers="kernel-hooks"
 kernel_hooks_version="${_kernver}"
 
@@ -65,24 +67,28 @@ do_configure() {
 		_args="CROSS_COMPILE=${XBPS_CROSS_TRIPLET}-"
 	fi
 
-	if [ -f ${FILESDIR}/${subarch:-$arch}-dotconfig-custom ]; then
-		msg_normal "Detected a custom .config file for your arch, using it.\n"
-		cp -f ${FILESDIR}/${subarch:-$arch}-dotconfig-custom .config
-		make ${makejobs} ARCH=$arch ${_args} oldconfig
-	elif [ -f ${FILESDIR}/${subarch:-$arch}-dotconfig ]; then
-		msg_normal "Detected a .config file for your arch, using it.\n"
-		cp -f ${FILESDIR}/${subarch:-$arch}-dotconfig .config
-		make ${makejobs} ARCH=$arch ${_args} oldconfig
-	elif [ -f ${FILESDIR}/${XBPS_TARGET_MACHINE%%-musl}-dotconfig ]; then
-		msg_normal "Detected a .config file for your cpu family, using it.\n"
-		cp -f ${FILESDIR}/${XBPS_TARGET_MACHINE%%-musl}-dotconfig .config
-		make ${makejobs} ARCH=$arch ${_args} oldconfig
-	else
-		msg_normal "Defaulting to 'allmodconfig'.\n"
-		make ${makejobs} ARCH=$arch ${_args} allmodconfig
-	fi
+#	if [ -f ${FILESDIR}/${subarch:-$arch}-dotconfig-custom ]; then
+#		msg_normal "Detected a custom .config file for your arch, using it.\n"
+#		cp -f ${FILESDIR}/${subarch:-$arch}-dotconfig-custom .config
+#		make ${makejobs} ARCH=$arch ${_args} oldconfig
+#	elif [ -f ${FILESDIR}/${subarch:-$arch}-dotconfig ]; then
+#		msg_normal "Detected a .config file for your arch, using it.\n"
+#		cp -f ${FILESDIR}/${subarch:-$arch}-dotconfig .config
+#		make ${makejobs} ARCH=$arch ${_args} oldconfig
+#	elif [ -f ${FILESDIR}/${XBPS_TARGET_MACHINE%%-musl}-dotconfig ]; then
+#		msg_normal "Detected a .config file for your cpu family, using it.\n"
+#		cp -f ${FILESDIR}/${XBPS_TARGET_MACHINE%%-musl}-dotconfig .config
+#		make ${makejobs} ARCH=$arch ${_args} oldconfig
+#	else
+#		msg_normal "Defaulting to 'allmodconfig'.\n"
+#		make ${makejobs} ARCH=$arch ${_args} allmodconfig
+#	fi
+
+	unset LDFLAGS
+	cp -f ${FILESDIR}/config-odroidgo2 .config
+
 	# Always use our revision to CONFIG_LOCALVERSION to match our pkg version.
-	sed -i -e "s|^\(CONFIG_LOCALVERSION=\).*|\1\"_${revision}\"|" .config
+#	sed -i -e "s|^\(CONFIG_LOCALVERSION=\).*|\1\"_${revision}\"|" .config
 }
 
 do_build() {
