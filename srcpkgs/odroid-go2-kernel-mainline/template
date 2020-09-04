@@ -60,8 +60,6 @@ do_build() {
 		_args="CROSS_COMPILE=${XBPS_CROSS_TRIPLET}-"
 	fi
 
-	cp -f ${FILESDIR}/config-odroidgo2 .config
-
 	# Always use our revision to CONFIG_LOCALVERSION to match our pkg version.
 	sed -i -e "s|^\(CONFIG_LOCALVERSION=\).*|\1\"_${revision}\"|" .config
 
