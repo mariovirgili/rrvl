@@ -10,9 +10,16 @@ depends="python3-retrolauncher2"
 license="GPL-3.0-or-later"
 homepage="https://github.com/valadaa48/retrolauncher2"
 
-# TODO @pyghast copy conky.conf to ~/.config/conky/conky.conf
-# check our other packages for INSTALL files on how
-# to do this during package install
+pre_configure() {
+
+        mkdir /home/odroid/.config/conky
+        cp ${FILESDIR}/conky.conf /home/odroid/.config/conky/
+	cp ${FILESDIR}/autoboot_retroarch /home/odroid/.config/
+	cp ${FILESDIR}/setboot.sh /usr/bin/
+	cp ${FILESDIR}/rrvl.toml /home/odroid/.config/retrolauncher/
+
+                }
+
 
 do_install() {
 	vinstall ${FILESDIR}/retrolauncher2.sh 755 usr/share/rrvl/scripts

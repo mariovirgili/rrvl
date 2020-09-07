@@ -1,0 +1,518 @@
+title = "+-- RRVL --+"
+
+theme = "retroroller"
+log_file = "/tmp/retrolauncher.log"
+
+[shortcuts]
+
+#f1 = { name = "None" } uncomment these and comment the following if you want to disable RA launching
+#f2 = { name = "None" }
+
+f1 = { name = "Shut", cmd = "sudo shutdown -h now" }
+f2 = { name = "Reset", cmd = "performance off; sudo sv restart retrolauncher2" }
+f3 = { name = "None" }
+f4 = { name = "None" }
+f5 = { name = "Hotkey" }
+f6 = { name = "Quit", cmd = "rm /var/service/retrolauncher2; ln -s /etc/sv/retroarch /var/service; sudo sv start retroarch; sudo kill -9 $(cat /etc/sv/retrolauncher2/supervise/pid)" }
+
+#f6 = { name = "Reboot", cmd = "sudo reboot" }
+#f6 = { name = "EmSt", cmd = "emulationstation" }
+#f3 = { name = "Shutdown", cmd = "sudo shutdown -h now" }
+
+
+#[[apps]]
+#name = "RetroArch 64-bit"
+#cmd = "retroarch"
+
+#[[apps]]
+#name = "RetroArch 32-bit"
+#cmd = "retroarch32"
+
+#[[apps]]
+#name = ""
+
+#[[apps]]
+#name = "Emulation Station"
+#cmd = "emulationstation"
+
+[[apps]]
+name = "PPSSPP"
+cmd = "performance on; ppsspp; performance off"
+
+[[apps]]
+name = "Dr4st1c"
+cmd = "~/drastic/drastic"
+term = true
+
+[[apps]]
+name = "\n:: System Utils ::"
+
+# broken on v11
+#[[apps]]
+#name = "Dingux Commander"
+#cmd = "dinguxcommander"
+
+[[apps]]
+name = "Reset Retrolauncher"
+cmd = "sudo sv restart retrolauncher2"
+
+[[apps]]
+name = "Reboot"
+cmd = "sudo reboot"
+
+[[apps]]
+name = ""
+
+[[apps]]
+name = "System Update"
+cmd = "sudo xbps-install -Syu $* xbps; sudo xbps-install -yu $*; sudo arm-xbps install -Syu $* xbps; sudo arm-xbps install -yu $*"
+term = true
+
+# untested
+#[[apps]]
+#name = "Install package(s) from USB"
+#cmd = "sudo mount /dev/sda1 /mnt && sudo pacman -U --noconfirm /mnt/pkg/*.xz; sudo umount /dev/sda1"
+#term = true
+#
+#[[apps]]
+#name = "Rsync roms from USB"
+#cmd = "sudo mount /dev/sda1 /mnt && rsync -av /mnt/roms/* /roms/; sudo umount /dev/sda1"
+#term = true
+
+[[apps]]
+name = "neofetch"
+cmd = "neofetch --ascii_distro Arch_small"
+term = true
+
+#[[apps]]
+#name = "Network Setup (nmui)"
+#cmd = "/roms/sh/ConfigureNetwork.sh"
+
+[[apps]]
+name = ""
+
+[[apps]]
+name = "Autostart RA --> RL2"
+cmd = "if [ -e /home/odroid/.config/autoboot_retrolauncher2 ]; then printf \"You are already booting to Retrolauncher2!\"; exit 1; fi; setboot.sh retroarch retrolauncher2"
+term = true
+
+[[apps]]
+name = "Autostart RL2 --> RA"
+cmd = "if [ -e /home/odroid/.config/autoboot_retroarch ]; then printf \"You are already booting to Retroarch!\"; exit 1; fi; setboot.sh retrolauncher2 retroarch"
+term = true
+
+[[apps]]
+name = ""
+
+[[apps]]
+name = "Force System Shutdown"
+cmd = "sudo shutdown -h now"
+
+
+# Begin Systems Config
+
+[[context_menu]]
+name = "Play with PPSSPP"
+cmd = "performance on; ppsspp {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/psp"
+term = true
+
+[[context_menu]]
+name = "Play with nestopia"
+cmd = "retroarch -L ~/.config/retroarch/cores/nestopia_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/nes"
+term = true
+
+[[context_menu]]
+name = "Play with FBNeo on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbneo_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/arcade"
+term = true
+
+[[context_menu]]
+name = "Play with Flycast RRVL on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro_retroelec.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/dreamcast"
+term = true
+
+[[context_menu]]
+name = "Play with Flycast Retroelec on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro_retroelec.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/dreamcast"
+term = true
+
+[[context_menu]]
+name = "Play with Flycast_xtreme on RA32"
+cmd = "performance on; retroarch32 -L ~/.config/retroarch32/cores/flycast_xtreme_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/dreamcast"
+term = true
+
+
+[[context_menu]]
+name = "Play with Flycast RRVL on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atomiswave"
+term = true
+
+[[context_menu]]
+name = "Play with Flycast Retroelec on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro_retroelec.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atomiswave"
+term = true
+
+
+[[context_menu]]
+name = "Play with Flycast RRVL on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/naomi"
+term = true
+
+[[context_menu]]
+name = "Play with Flycast Retroelec on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/flycast_libretro_retroelec.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/naomi"
+term = true
+
+
+[[context_menu]]
+name = "Play with Flycast_xtreme on RA32"
+cmd = "performance on; retroarch32 -L ~/.config/retroarch32/cores/flycast_xtreme_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/naomi"
+term = true
+
+[[context_menu]]
+name = "Play with Reicast_xtreme on RA32"
+cmd = "performance on; retroarch32 -L ~/.config/retroarch32/cores/reicast_xtreme_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/naomi"
+term = true
+
+[[context_menu]]
+name = "Play with Yabasanshiro on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/yabasanshiro_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/saturn"
+term = true
+
+[[context_menu]]
+name = "Play with Mame on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/mame"
+term = true
+
+[[context_menu]]
+name = "Play with Mame2000 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame2000_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/mame"
+term = true
+
+[[context_menu]]
+name = "Play with Mame2003_plus on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame2003_plus_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/mame"
+term = true
+
+#[[context_menu]]
+#name = "Play with Mame2010 on RA64"
+#cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame2010_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+#path = "/roms/mame"
+#term = true
+
+
+
+
+[[context_menu]]
+name = "Play with FBNeo on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbneo_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/neogeo"
+term = true
+
+[[context_menu]]
+name = "Play with FBAlpha cps1 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbalpha2012_cps1_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/cps1"
+term = true
+
+[[context_menu]]
+name = "Play with FBAlpha cps2 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbalpha2012_cps2_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/cps2"
+term = true
+
+[[context_menu]]
+name = "Play CPS3 with FBNeo on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbneo_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/cps3"
+term = true
+
+[[context_menu]]
+name = "Play CPS with FBNeo on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/fbneo_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/cps"
+term = true
+
+[[context_menu]]
+name = "Play with Mame2003 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame2003_plus_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/mame2003"
+term = true
+
+[[context_menu]]
+name = "Play with Mame2010 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mame2010_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/mame2010"
+term = true
+
+[[context_menu]]
+name = "Play Fds games on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/nestopia_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/fds"
+term = true
+
+[[context_menu]]
+name = "Play Snes-cd SMU1 on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/snesmsu1"
+term = true
+
+[[context_menu]]
+name = "Play PC-FX on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mednafen_pcfx_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/pcfx"
+term = true
+
+[[context_menu]]
+name = "Play Snes on RA64 (Snes9x2010)"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/snes9x2010_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/snes"
+term = true
+
+[[context_menu]]
+name = "Play with N64 MupenPlus"
+cmd = "performance on; /usr/bin/mupen64plus {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/n64"
+term = true
+
+[[context_menu]]
+name = "Play N64 with Parallel on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/parallel_n64_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/n64"
+term = true
+
+
+[[context_menu]]
+name = "Play GB game on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/gambatte_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/gb"
+term = true
+
+[[context_menu]]
+name = "Play GBC game on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/gambatte_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/gbc"
+term = true
+
+[[context_menu]]
+name = "Play GBA using Mgba on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/mgba_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/gba"
+term = true
+
+[[context_menu]]
+name = "Play SGB using Mgba on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mgba_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/sgb"
+term = true
+
+[[context_menu]]
+name = "Play PSX with pcsx_rearmed on RA64"
+cmd = "performance on; retroarch32 -L ~/.config/retroarch32/cores/pcsx_rearmed_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/psx"
+term = true
+
+[[context_menu]]
+name = "Play NDS game using Dr4st1c"
+cmd = "performance on; cd ~/drastic/; ./drastic {path}; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/nds"
+term = true
+
+[[context_menu]]
+name = "Play SMS on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/sms"
+term = true
+
+[[context_menu]]
+name = "Play Megadrive with GenesisPlusGX on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/megadrive"
+term = true
+
+[[context_menu]]
+name = "Play Genesis with GenesisPlusGX on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"                +----- Press A to exit -----+\""
+path = "/roms/genesis"
+term = true
+
+[[context_menu]]
+name = "Play SegaCD on RA64"
+cmd = "performance on; retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so {path} >/dev/null 2>&1; performance off; clear; echo; echo \"                +----- Press A to exit -----+\""
+path = "/roms/segacd"
+term = true
+
+[[context_menu]]
+name = "Play 32x with Picodrive on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/picodrive_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/sega32x"
+term = true
+
+[[context_menu]]
+name = "Play Gamegear on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/gamegear"
+term = true
+
+[[context_menu]]
+name = "Play Ngp on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_ngp_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/ngp"
+term = true
+
+[[context_menu]]
+name = "Play Ngpc on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_ngp_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/ngpc"
+term = true
+
+[[context_menu]]
+name = "Play Turbografx-CD on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.s {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/tgcd"
+term = true
+
+[[context_menu]]
+name = "Play Turbografx-16 on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.s {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/tg16"
+term = true
+
+[[context_menu]]
+name = "Play PCEngine on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.s {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/pcengine"
+term = true
+
+[[context_menu]]
+name = "Play PCEngine-CD on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.s {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/pcenginecd"
+term = true
+
+[[context_menu]]
+name = "Play Supergrafx on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.s {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/supergrafx"
+term = true
+
+[[context_menu]]
+name = "Play Vectrex on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/vecx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/vextrex"
+term = true
+
+[[context_menu]]
+name = "Play Wonderswan on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_wswan_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/wonderswan"
+term = true
+
+[[context_menu]]
+name = "Play Wonderswan Color on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/mednafen_wswan_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/wonderswancolor"
+term = true
+
+[[context_menu]]
+name = "Play VCS2600 on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/stella2014_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atari2600"
+term = true
+
+[[context_menu]]
+name = "Play Atari 5200 on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/atari800_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atari5200"
+term = true
+
+[[context_menu]]
+name = "Play Atari800 on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/atari800_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atari800"
+term = true
+
+[[context_menu]]
+name = "Play Atari 7800 on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/prosystem_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atari7800"
+term = true
+
+[[context_menu]]
+name = "Play Atari Lynx on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/handy_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/atarilynx"
+term = true
+
+[[context_menu]]
+name = "Run MS-Dos using Dosbox on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/dosbox_libretro.so {path}"
+path = "/roms/dos"
+term = true
+
+[[context_menu]]
+name = "Play Colecovision on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/bluemsx_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/coleco"
+term = true
+
+[[context_menu]]
+name = "Play Scummvm game on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/scummvm_libretro.so {path}"
+path = "/roms/scummvm"
+term = true
+
+[[context_menu]]
+name = "Play C64 game on RA64 using Vice"
+cmd = "retroarch -L ~/.config/retroarch/cores/vice_x64_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/c64"
+term = true
+
+[[context_menu]]
+name = "Run Pokemini game on RA64"
+cmd = "retroarch -L ~/.config/retroarch/cores/pokemini_libretro.so {path} >/dev/null 2>&1; clear; echo; echo \"               +----- Press A to exit -----+\""
+path = "/roms/pokemini"
+# End Systems Config
+
+[[context_menu]]
+name = "Set Timezone"
+cmd = "sudo ln -sf {path} /etc/localtime"
+path = "/usr/share/zoneinfo"
+
+[[context_menu]]
+name = "Run in Terminal"
+cmd = "{path}"
+term = true
+
+[[context_menu]]
+name = "Run"
+cmd = "{path}"
+
+[[context_menu]]
+name = "Delete"
+cmd = "rm -f {path}"
+term="true"
+path = "/roms"
+
+[[context_menu]]
+name = "Unzip it!"
+cmd = "if [[ ! -f /usr/bin/unzip ]] ; then sudo xbps-install unzip; fi; chmod 755 {path}; outputdir=$(dirname {path}); sudo unzip -d $outputdir {path}"
+term="true"
+path = "/roms"
+
