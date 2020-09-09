@@ -15,7 +15,7 @@ f2 = { name = " " }
 f3 = { name = " " }
 f4 = { name = " " }
 f5 = { name = "Hotkey" }
-f6 = { name = "RA64", cmd = "setboot.sh retroarch" }
+f6 = { name = "RA64", cmd = "sudo ln -s /etc/sv/retroarch /var/service; rm /var/service/retrolauncher2" }
 
 #f6 = { name = "Reboot", cmd = "sudo reboot" }
 #f6 = { name = "EmSt", cmd = "emulationstation" }
@@ -54,9 +54,9 @@ name = "\n:: System Utils ::"
 #name = "Dingux Commander"
 #cmd = "dinguxcommander"
 
-[[apps]]
-name = "Restart Retrolauncher"
-cmd = "sudo sv restart retrolauncher2"
+#[[apps]]
+#name = "Restart Retrolauncher"
+#cmd = "sudo sv restart retrolauncher2"
 
 [[apps]]
 name = "Reboot"
