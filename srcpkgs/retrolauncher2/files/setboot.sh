@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
-# usage: setboot.sh sourcelauncher autostartapp
+# usage: setboot.sh autostartapp
 
-source=$1
-app=$2
+app=$1
+
+cd ~/.config/
+source=$(ls auto* | awk -F'[_.]' '{print $2}')
+
 
 if [ $# -eq 0 ]; then
     echo "No arguments provided"
     exit 1
 fi
 
-if [ "source" = "app" ]; then
+if [ -e ~/.config/autoboot_$app ]; then
 	echo "You are already booting from it!"
 	exit 1
 fi
@@ -26,7 +29,8 @@ fi
 # add as many rm -f as booters installed
 
 
-if [ "$source" = "retroarch" ]; then
+
+if [ "${source}" = "retroarch" ]; then
 
 	if [ -e /var/service/retrolauncher2 ]; then
 		sudo rm -f /var/service/retrolauncher2
@@ -42,7 +46,7 @@ if [ "$source" = "retroarch" ]; then
 
 fi
 
-if [ "$source" = "retrolauncher2" ]; then
+if [ "${source}" = "retrolauncher2" ]; then
 
         if [ -e /var/service/retroarch ]; then
                 sudo rm -f /var/service/retroarch
@@ -59,7 +63,7 @@ if [ "$source" = "retrolauncher2" ]; then
 fi
 
 
-if [ "$source" = "emulationstation" ]; then
+if [ "${source}" = "emulationstation" ]; then
 
         if [ -e /var/service/retrolauncher2 ]; then
                 sudo rm -f /var/service/retrolauncher2
@@ -75,7 +79,7 @@ if [ "$source" = "emulationstation" ]; then
 
 fi
 
-if [ "source" = "wayland" ]; then
+if [ "${source}" = "wayland" ]; then
 
         if [ -e /var/service/retrolauncher2 ]; then
                 sudo rm -f /var/service/retrolauncher2
@@ -92,11 +96,16 @@ if [ "source" = "wayland" ]; then
 fi
 
 # after killing other services running, let autostart process begin
-sudo ln -sf /etc/sv/$app /var/service/
+
+if [ ! -e /var/service/$app ]; then
+	sudo ln -sf /etc/sv/$app /var/service/
+fi
 
 # create a filecheck used by rrvl.toml
+
+rm ~/.config/autoboot_*
 touch /home/odroid/.config/autoboot_$app
 
 # then finally kill the former launcher after deleting the filecheck
-sudo rm -f /home/odroid/.config/autoboot_$source
-sudo rm -f /var/service/$source 
+
+sudo rm -f /var/service/${source}

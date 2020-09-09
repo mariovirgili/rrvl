@@ -8,12 +8,14 @@ log_file = "/tmp/retrolauncher.log"
 #f1 = { name = "None" } uncomment these and comment the following if you want to disable RA launching
 #f2 = { name = "None" }
 
-f1 = { name = "Shut", cmd = "sudo shutdown -h now" }
-f2 = { name = "Reset", cmd = "performance off; sudo sv restart retrolauncher2" }
-f3 = { name = "None" }
-f4 = { name = "None" }
+f1 = { name = "Power", cmd = "sudo shutdown -h now" }
+#f2 = { name = "Reset", cmd = "performance off; sudo sv restart retrolauncher2" }
+#f1 = { name = " " }
+f2 = { name = " " }
+f3 = { name = " " }
+f4 = { name = " " }
 f5 = { name = "Hotkey" }
-f6 = { name = "Quit", cmd = "rm /var/service/retrolauncher2; ln -s /etc/sv/retroarch /var/service; sudo sv start retroarch; sudo kill -9 $(cat /etc/sv/retrolauncher2/supervise/pid)" }
+f6 = { name = "RA64", cmd = "setboot.sh retroarch" }
 
 #f6 = { name = "Reboot", cmd = "sudo reboot" }
 #f6 = { name = "EmSt", cmd = "emulationstation" }
@@ -37,11 +39,11 @@ f6 = { name = "Quit", cmd = "rm /var/service/retrolauncher2; ln -s /etc/sv/retro
 
 [[apps]]
 name = "PPSSPP"
-cmd = "performance on; ppsspp; performance off"
+cmd = "performance on; ppsspp-sdl; performance off"
 
 [[apps]]
 name = "Dr4st1c"
-cmd = "~/drastic/drastic"
+cmd = "drastic"
 term = true
 
 [[apps]]
@@ -53,7 +55,7 @@ name = "\n:: System Utils ::"
 #cmd = "dinguxcommander"
 
 [[apps]]
-name = "Reset Retrolauncher"
+name = "Restart Retrolauncher"
 cmd = "sudo sv restart retrolauncher2"
 
 [[apps]]
@@ -92,13 +94,13 @@ term = true
 name = ""
 
 [[apps]]
-name = "Autostart RA --> RL2"
-cmd = "if [ -e /home/odroid/.config/autoboot_retrolauncher2 ]; then printf \"You are already booting to Retrolauncher2!\"; exit 1; fi; setboot.sh retroarch retrolauncher2"
+name = "Autostart Retrolauncher"
+cmd = "setboot.sh retrolauncher2"
 term = true
 
 [[apps]]
-name = "Autostart RL2 --> RA"
-cmd = "if [ -e /home/odroid/.config/autoboot_retroarch ]; then printf \"You are already booting to Retroarch!\"; exit 1; fi; setboot.sh retrolauncher2 retroarch"
+name = "Autostart Retroarch"
+cmd = "setboot.sh retrolauncher2 retroarch"
 term = true
 
 [[apps]]
@@ -113,7 +115,7 @@ cmd = "sudo shutdown -h now"
 
 [[context_menu]]
 name = "Play with PPSSPP"
-cmd = "performance on; ppsspp {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
+cmd = "performance on; ppsspp-sdl {path} >/dev/null 2>&1; performance off; clear; echo; echo \"               +----- Press A to exit -----+\""
 path = "/roms/psp"
 term = true
 
