@@ -100,7 +100,7 @@ term = true
 
 [[apps]]
 name = "Autostart Retroarch"
-cmd = "setboot.sh retrolauncher2 retroarch"
+cmd = "setboot.sh retroarch"
 term = true
 
 [[apps]]
